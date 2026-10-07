@@ -338,6 +338,9 @@ importers:
       '@reelout/config':
         specifier: workspace:^
         version: link:packages/config
+      '@reelout/context':
+        specifier: workspace:^
+        version: link:packages/context
       '@reelout/core':
         specifier: workspace:^
         version: link:packages/core
@@ -479,7 +482,17 @@ importers:
         specifier: 'catalog:'
         version: 4.17.12
 
-  packages/context: {}
+  packages/context:
+    dependencies:
+      '@reelout/config':
+        specifier: workspace:^
+        version: link:../config
+      '@reelout/core':
+        specifier: workspace:^
+        version: link:../core
+      consola:
+        specifier: 'catalog:'
+        version: 3.4.2
 
   packages/core:
     dependencies:
@@ -495,6 +508,9 @@ importers:
       conventional-commits-parser:
         specifier: 'catalog:'
         version: 7.1.3
+      hosted-git-info:
+        specifier: 'catalog:'
+        version: 10.1.1
       mdast-util-from-markdown:
         specifier: 'catalog:'
         version: 2.1.0(supports-color@10.2.2)

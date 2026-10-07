@@ -3,6 +3,7 @@
 
 export * from './createGitCommit'
 export * from './extractMentions'
+export * from './getCurrentGitCommit'
 export * from './getParsedGitCommit'
 export * from './parseGitCommit'
 export * from './parseGitPrettyFormat'
