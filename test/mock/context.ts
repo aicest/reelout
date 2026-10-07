@@ -2,6 +2,7 @@
 // Copyright (c) 2026 Fai
 
 import type { GitRepository, ReleaseContext, Workspace } from '@reelout/core'
+import { normalizeCommitFilter } from '@reelout/core/config/normalizeCommitFilter'
 import { createConsola, LogLevels } from 'consola/core'
 import { Writable } from 'node:stream'
 import { beforeEach, vi, type Mock } from 'vitest'
@@ -15,6 +16,14 @@ const createMockContext = (): ReleaseContext => ({
   stderr: new Writable(),
   logger: createMockLogger(),
   repository: null,
+  classifier: normalizeCommitFilter({
+    major: [],
+    minor: ['feat'],
+    patch: ['fix', 'perf', 'revert'],
+  }),
+  type: 'auto',
+  allowEmpty: false,
+  versionQualifier: undefined,
   dryRun: false,
   packages: [],
   plans: [],

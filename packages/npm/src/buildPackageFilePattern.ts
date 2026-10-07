@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Fai
 
-import type { Workspace } from '@reelout/core'
+import { ALL_FILES, type Workspace } from '@reelout/core'
 import path from 'node:path'
-
-const ALL_FILES = '**/*'
 
 const LOCK_FILES = [
   'package-lock.json',

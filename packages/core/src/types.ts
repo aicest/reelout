@@ -49,7 +49,38 @@ export interface GitRepository {
   url: string
 }
 
+export type CommitClassifier = (
+  commit: GitCommit
+) => ReleaseType | null | undefined
+
 export type ReleaseType = 'major' | 'minor' | 'patch'
+
+export type ReleaseTypeHint = 'auto' | ReleaseType
+
+/**
+ * Specify the strategy used to calculate the next semantic version.
+ *
+ * - `advance`: Bumps the target core version segment (`major`, `minor`, or
+ *   `patch`). Applies when stepping into a new release milestone or switching
+ *   to a new prerelease channel.
+ *   - Release → Release (e.g., `1.2.3` → `1.3.0`).
+ *   - Release → Prerelease (e.g., `1.2.3` → `1.3.0-dev.0`).
+ *   - Prerelease → Next Prerelease Channel (e.g., `1.3.0-dev.5` → `1.4.0-dev.0`).
+ * - `continue`: Retains the target core version segment without bumping it.
+ *   Applies when issuing sequential prerelease builds within the same channel or
+ *   graduating an active prerelease directly to its stable target release.
+ *   - Prerelease → Prerelease (e.g., `1.3.0-dev.5` → `1.3.0-dev.6`).
+ *   - Prerelease → Release (e.g., `1.3.0-dev.5` → `1.3.0`).
+ */
+export type VersionTransition = 'advance' | 'continue'
+
+export interface ReleaseConfig {
+  classifier?: CommitClassifier | Partial<Record<ReleaseType, GitCommitType[]>>
+}
+
+export interface ResolvedReleaseConfig {
+  classifier: CommitClassifier
+}
 
 export type ReleaseStatus = 'success' | 'failure'
 
@@ -67,6 +98,10 @@ export interface ReleaseContext<P extends Package = Package> {
   stderr: NodeJS.WritableStream
   logger: ConsolaInstance
   repository: GitRepository | null
+  classifier: CommitClassifier
+  type: ReleaseTypeHint
+  versionQualifier: string | undefined
+  allowEmpty: boolean
   dryRun: boolean
   packages: P[]
   plans: ReleasePlan<P>[]
@@ -101,6 +136,7 @@ export interface Tag {
 
 export interface Release {
   type: ReleaseType
+  transition?: VersionTransition | null
   version?: string | null
   tag?: Tag | null
   changelog?: string | null

@@ -3,3 +3,4 @@
 
 export * from './const'
 export * from './isSemVer'
+export * from './normalizeCommitFilter'
