@@ -23,6 +23,7 @@ const createMockContext = (): ReleaseContext => ({
   repository: null,
   ref: { type: 'branch', name: 'main' },
   commit: { hash: 'abc123' } as GitCommit,
+  author: { name: 'Test User', email: 'test@example.com' },
   classifier: normalizeCommitFilter({
     major: [],
     minor: ['feat'],
