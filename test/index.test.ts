@@ -5,5 +5,10 @@ import * as module from 'reelout'
 import { expect, test } from 'vitest'
 
 test('exposes the correct API contract', () => {
-  expect(Object.keys(module)).toEqual([])
+  expect(Object.keys(module).sort()).toMatchInlineSnapshot(`
+    [
+      "execCommand",
+      "execGit",
+    ]
+  `)
 })
