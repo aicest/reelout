@@ -46,6 +46,7 @@
     "conventional-changelog-conventionalcommits": "catalog:",
     "conventional-changelog-writer": "catalog:",
     "conventional-commits-parser": "catalog:",
+    "hosted-git-info": "catalog:",
     "mdast-util-from-markdown": "catalog:",
     "mdast-util-to-markdown": "catalog:",
     "minimatch": "catalog:",

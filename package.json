@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "@reelout/config": "workspace:^",
+    "@reelout/context": "workspace:^",
     "@reelout/core": "workspace:^"
   },
   "devDependencies": {
