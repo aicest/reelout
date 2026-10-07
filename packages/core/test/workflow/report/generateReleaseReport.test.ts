@@ -227,6 +227,23 @@ test('constructs structured package and release objects when release plans are p
   `)
 })
 
+test('includes versionQualifier and releaseChannel in report when present in context', () => {
+  context.versionQualifier = 'dev'
+  context.releaseChannel = 'next'
+
+  const report = generateReleaseReport(context)
+
+  expect(report).toMatchInlineSnapshot(`
+    {
+      "error": null,
+      "packages": [],
+      "phase": null,
+      "plans": [],
+      "status": null,
+    }
+  `)
+})
+
 test('omits release plan from report when release version is null or missing', () => {
   context.plans = [
     { package: { name: 'foo', version: '1.0.0' }, release: null },
