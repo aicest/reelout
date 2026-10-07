@@ -7,9 +7,11 @@ import { expect, test } from 'vitest'
 test('exposes the correct API contract', () => {
   expect(Object.keys(module).sort()).toMatchInlineSnapshot(`
     [
+      "buildTrailerPattern",
       "compact",
       "execCommand",
       "execGit",
+      "extractMentions",
       "formatError",
       "formatFile",
       "interpolate",
@@ -18,6 +20,7 @@ test('exposes the correct API contract', () => {
       "isMatch",
       "isSemVer",
       "isTruthyString",
+      "parseGitCommit",
       "readJson",
       "unique",
       "writeJson",
