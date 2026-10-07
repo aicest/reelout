@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Fai
 
-import type { GitRepository, ReleaseContext, Workspace } from '@reelout/core'
+import type {
+  GitCommit,
+  GitRepository,
+  ReleaseContext,
+  Workspace,
+} from '@reelout/core'
 import { normalizeCommitFilter } from '@reelout/core/config/normalizeCommitFilter'
 import { createConsola, LogLevels } from 'consola/core'
 import { Writable } from 'node:stream'
@@ -16,14 +21,18 @@ const createMockContext = (): ReleaseContext => ({
   stderr: new Writable(),
   logger: createMockLogger(),
   repository: null,
+  ref: { type: 'branch', name: 'main' },
+  commit: { hash: 'abc123' } as GitCommit,
   classifier: normalizeCommitFilter({
     major: [],
     minor: ['feat'],
     patch: ['fix', 'perf', 'revert'],
   }),
+  rules: [],
   type: 'auto',
-  allowEmpty: false,
   versionQualifier: undefined,
+  releaseChannel: undefined,
+  allowEmpty: false,
   dryRun: false,
   packages: [],
   plans: [],

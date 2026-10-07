@@ -6,6 +6,13 @@ import type { CommitBase, CommitNote } from 'conventional-commits-parser'
 import type { Hosts } from 'hosted-git-info'
 import type { HookHandler } from './plugin'
 
+export type GitRefType = 'branch'
+
+export interface GitRef {
+  type: GitRefType
+  name: string
+}
+
 export type GitCommitType =
   | 'build'
   | 'chore'
@@ -74,12 +81,28 @@ export type ReleaseTypeHint = 'auto' | ReleaseType
  */
 export type VersionTransition = 'advance' | 'continue'
 
+export interface ReleaseRule {
+  type?: GitRefType | undefined
+  pattern?: string | undefined
+  qualifier?: string | boolean | undefined
+  channel?: string | boolean | undefined
+}
+
+export interface ResolvedReleaseRule {
+  type: GitRefType | undefined
+  pattern: string
+  versionQualifier: string | undefined
+  releaseChannel: string | undefined
+}
+
 export interface ReleaseConfig {
   classifier?: CommitClassifier | Partial<Record<ReleaseType, GitCommitType[]>>
+  rules?: (ReleaseRule | string | false | null | undefined)[]
 }
 
 export interface ResolvedReleaseConfig {
   classifier: CommitClassifier
+  rules: ResolvedReleaseRule[]
 }
 
 export type ReleaseStatus = 'success' | 'failure'
@@ -98,9 +121,13 @@ export interface ReleaseContext<P extends Package = Package> {
   stderr: NodeJS.WritableStream
   logger: ConsolaInstance
   repository: GitRepository | null
+  ref: GitRef
+  commit: GitCommit
   classifier: CommitClassifier
+  rules: ResolvedReleaseRule[]
   type: ReleaseTypeHint
   versionQualifier: string | undefined
+  releaseChannel: string | undefined
   allowEmpty: boolean
   dryRun: boolean
   packages: P[]
