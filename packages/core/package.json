@@ -8,7 +8,13 @@
   },
   "license": "MIT",
   "type": "module",
-  "imports": {},
+  "imports": {
+    "#*": [
+      "./src/*",
+      "./src/*.ts",
+      "./src/*/index.ts"
+    ]
+  },
   "exports": {
     "./package.json": {
       "default": "./package.json"
@@ -36,6 +42,7 @@
   },
   "dependencies": {
     "consola": "catalog:",
+    "conventional-commits-parser": "catalog:",
     "minimatch": "catalog:",
     "prettier": "catalog:",
     "semver": "catalog:"
