@@ -3,5 +3,6 @@
 
 export * from './execCommand'
 export * from './execGit'
+export * from './formatError'
 export * from './formatFile'
 export * from './interpolate'
