@@ -233,6 +233,9 @@ catalogs:
     conventional-commits-parser:
       specifier: ^7.1.3
       version: 7.1.3
+    cosmiconfig:
+      specifier: ^10.0.1
+      version: 10.0.1
     eslint:
       specifier: ^10.12.0
       version: 10.12.0
@@ -332,6 +335,9 @@ importers:
 
   .:
     dependencies:
+      '@reelout/config':
+        specifier: workspace:^
+        version: link:packages/config
       '@reelout/core':
         specifier: workspace:^
         version: link:packages/core
@@ -448,7 +454,30 @@ importers:
         specifier: 'catalog:'
         version: 3.4.2
 
-  packages/config: {}
+  packages/config:
+    dependencies:
+      '@reelout/core':
+        specifier: workspace:^
+        version: link:../core
+      '@reelout/git':
+        specifier: workspace:^
+        version: link:../git
+      '@reelout/github':
+        specifier: workspace:^
+        version: link:../github
+      '@reelout/npm':
+        specifier: workspace:^
+        version: link:../npm
+      cosmiconfig:
+        specifier: 'catalog:'
+        version: 10.0.1
+      lodash-es:
+        specifier: 'catalog:'
+        version: 4.18.1
+    devDependencies:
+      '@types/lodash-es':
+        specifier: 'catalog:'
+        version: 4.17.12
 
   packages/context: {}
 
@@ -2233,6 +2262,10 @@ packages:
       cosmiconfig: '>=9'
       typescript: '>=5'
 
+  cosmiconfig@10.0.1:
+    resolution: {integrity: sha512-/zvGoYn0y27QTBmK+0B+oPdEPC4fKGUmJsMTQbDjqph00TrkqfVFW/M+C6ya54sYCgHC6QCwK/mI6djt8cEGHQ==}
+    engines: {node: ^22.18 || >= 24}
+
   cosmiconfig@9.0.2:
     resolution: {integrity: sha512-gtTZxTDau1wL7Y7zifc2dd8jHSK/k6BTx/2Xp/BpdlAdnlYWFVt7qhJqgwi7637yRwRQ3qL4ZidbB4I8tA5VOg==}
     engines: {node: '>=14'}
@@ -2976,6 +3009,10 @@ packages:
 
   js-yaml@4.3.2:
     resolution: {integrity: sha512-SFNOvSJ+Dgf/9An904Yx+CgSlIPCkIpao4qo51lpee25TIRejdH3rhR4EZMGoNx3/TP3O+wzWuiTFl4sqbltzA==}
+    hasBin: true
+
+  js-yaml@5.4.3:
+    resolution: {integrity: sha512-yzzNtgczwgoVHNigCyKTXcQJU4Y8t/ikU4UxXW0BvrLfHTGWZhsNcOT2s/a7vn81/4KqVnNmHjaUEPlvWnNwVw==}
     hasBin: true
 
   jsdom@30.1.2:
@@ -6168,6 +6205,11 @@ snapshots:
       jiti: 2.6.1
       typescript: '@typescript/typescript6@6.0.2'
 
+  cosmiconfig@10.0.1:
+    dependencies:
+      env-paths: 2.2.1
+      js-yaml: 5.4.3
+
   cosmiconfig@9.0.2(@typescript/typescript6@6.0.2):
     dependencies:
       env-paths: 2.2.1
@@ -7000,6 +7042,10 @@ snapshots:
   js-tokens@4.0.0: {}
 
   js-yaml@4.3.2:
+    dependencies:
+      argparse: 2.0.1
+
+  js-yaml@5.4.3:
     dependencies:
       argparse: 2.0.1
 

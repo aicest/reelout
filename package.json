@@ -52,6 +52,7 @@
     "validate": "pnpm i && pnpm clean && pnpm lint && typedoc --out generated && pnpm build && pnpm test run --coverage"
   },
   "dependencies": {
+    "@reelout/config": "workspace:^",
     "@reelout/core": "workspace:^"
   },
   "devDependencies": {

@@ -100,16 +100,42 @@ export interface ResolvedReleaseRule {
   releaseChannel: string | undefined
 }
 
-export interface ReleaseConfig {
+export type ReleasePluginFactory<P extends Package = Package> = (
+  options?: unknown
+) => ReleasePlugin<P> | Promise<ReleasePlugin<P>>
+
+export type ReleasePluginConstructor<P extends Package = Package> = new (
+  options?: unknown
+) => ReleasePlugin<P>
+
+export type ReleasePluginDefinition<P extends Package = Package> =
+  ReleasePlugin<P> | ReleasePluginFactory<P> | ReleasePluginConstructor<P>
+
+export type ReleasePluginTuple<P extends Package = Package> = [
+  plugin: ReleasePluginDefinition<P>,
+  options?: unknown,
+]
+
+export interface ReleaseConfig<P extends Package = Package> {
   author?: Partial<GitAuthor>
   classifier?: CommitClassifier | Partial<Record<ReleaseType, GitCommitType[]>>
   rules?: (ReleaseRule | string | false | null | undefined)[]
+  plugins?: (
+    | [plugin: string, options?: unknown]
+    | [plugin: ReleasePluginDefinition<P>, options?: unknown]
+    | string
+    | ReleasePluginDefinition<P>
+    | false
+    | null
+    | undefined
+  )[]
 }
 
-export interface ResolvedReleaseConfig {
+export interface ResolvedReleaseConfig<P extends Package = Package> {
   author: GitAuthor
   classifier: CommitClassifier
   rules: ResolvedReleaseRule[]
+  plugins: (ReleasePluginDefinition<P> | ReleasePluginTuple<P>)[]
 }
 
 export type ReleaseStatus = 'success' | 'failure'
