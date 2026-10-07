@@ -88,10 +88,6 @@ test('creates tags based on message presence', async () => {
       - Improved performance",
           "--cleanup=whitespace",
         ],
-        [
-          "tag",
-          "--list",
-        ],
       ]
     `)
   })
