@@ -4,6 +4,7 @@
 export * from './cache'
 export * from './config'
 export * from './git'
+export * from './plugin'
 export * from './types'
 export * from './util'
 export * from './workflow'
