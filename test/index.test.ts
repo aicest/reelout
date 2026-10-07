@@ -7,11 +7,19 @@ import { expect, test } from 'vitest'
 test('exposes the correct API contract', () => {
   expect(Object.keys(module).sort()).toMatchInlineSnapshot(`
     [
+      "DEFAULT_CHANGELOG_FILE",
+      "GIT_TRAILER_RELEASE_AGENT",
+      "SEMVER_REGEX",
+      "buildChangelog",
       "buildTrailerPattern",
       "compact",
       "execCommand",
       "execGit",
+      "extractLatestVersion",
       "extractMentions",
+      "extractPlainText",
+      "extractPreviousVersion",
+      "extractSemVer",
       "formatError",
       "formatFile",
       "interpolate",
@@ -20,9 +28,12 @@ test('exposes the correct API contract', () => {
       "isMatch",
       "isSemVer",
       "isTruthyString",
+      "iterateChangelogVersions",
       "parseGitCommit",
+      "prependChangelog",
       "readJson",
       "unique",
+      "writeChangelog",
       "writeJson",
     ]
   `)
