@@ -10,7 +10,21 @@ import { glob, rm } from 'node:fs/promises'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { rootTemporaryDirectory } from 'tempy'
-import { beforeEach } from 'vitest'
+import { beforeEach, vi } from 'vitest'
+
+vi.mock(
+  import('@reelout/core/git/history/showGitHistory'),
+  async (importActual) => {
+    const { showGitHistory } = await importActual()
+
+    return {
+      showGitHistory: (...args: Parameters<typeof showGitHistory>) => {
+        args[1] = { ...args[1], pageSize: 1 }
+        return showGitHistory(...args)
+      },
+    }
+  }
+)
 
 let now: number
 
