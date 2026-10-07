@@ -4,6 +4,30 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      type:
+        description: 'Specify the release type, bypassing automatic commit analysis.'
+        type: choice
+        options:
+          - auto
+          - major
+          - minor
+          - patch
+        default: auto
+      qualifier:
+        description: 'Set or override the version qualifier (e.g., `alpha`, `beta`); pass `false` to disable.'
+        type: string
+      channel:
+        description: 'Set or override the release channel (e.g., `stable`, `canary`); pass `false` to disable.'
+        type: string
+      allow-empty:
+        description: 'Proceed with the release workflow even if no qualifying changes are detected.'
+        type: boolean
+        default: false
+      dry-run:
+        description: 'Simulate the release workflow without modifying files or publishing artifacts.'
+        type: boolean
+        default: false
 permissions:
   contents: write
   packages: write
@@ -26,4 +50,11 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install
       - run: pnpm validate
-      - run: node dist/cli.js
+      - run: |
+          ARGS=()
+          [ -n "${{ inputs.type }}" ] && ARGS+=("--type" "${{ inputs.type }}")
+          [ -n "${{ inputs.qualifier }}" ] && ARGS+=("--qualifier" "${{ inputs.qualifier }}")
+          [ -n "${{ inputs.channel }}" ] && ARGS+=("--channel" "${{ inputs.channel }}")
+          [ "${{ inputs.allow-empty }}" = "true" ] && ARGS+=("--allow-empty")
+          [ "${{ inputs.dry-run }}" = "true" ] && ARGS+=("--dry-run")
+          node dist/cli.js "${ARGS[@]}"

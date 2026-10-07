@@ -31,6 +31,7 @@ test('exposes the correct API contract', () => {
       "createGitTag",
       "createPlugin",
       "createProcessAbortSignal",
+      "createProgram",
       "defaultConfig",
       "deleteGitTag",
       "deriveChangeReleases",

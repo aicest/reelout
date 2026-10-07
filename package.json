@@ -52,6 +52,7 @@
     "validate": "pnpm i && pnpm clean && pnpm lint && typedoc --out generated && pnpm build && pnpm test run --coverage"
   },
   "dependencies": {
+    "@reelout/cli": "workspace:^",
     "@reelout/config": "workspace:^",
     "@reelout/context": "workspace:^",
     "@reelout/core": "workspace:^"
@@ -61,7 +62,6 @@
     "@commitlint/config-conventional": "catalog:",
     "@commitlint/types": "catalog:",
     "@eslint/js": "catalog:",
-    "@reelout/cli": "workspace:^",
     "@reelout/npm": "workspace:^",
     "@testing-library/jest-dom": "catalog:",
     "@types/node": "catalog:",

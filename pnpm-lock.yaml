@@ -218,6 +218,9 @@ catalogs:
     '@yarnpkg/plugin-npm':
       specifier: ^3.7.1
       version: 3.7.1
+    commander:
+      specifier: ^15.0.0
+      version: 15.0.0
     concurrently:
       specifier: ^10.0.5
       version: 10.0.5
@@ -335,6 +338,9 @@ importers:
 
   .:
     dependencies:
+      '@reelout/cli':
+        specifier: workspace:^
+        version: link:packages/cli
       '@reelout/config':
         specifier: workspace:^
         version: link:packages/config
@@ -357,9 +363,6 @@ importers:
       '@eslint/js':
         specifier: 'catalog:'
         version: 10.0.1(eslint@10.12.0(jiti@2.6.1)(supports-color@10.2.2))
-      '@reelout/cli':
-        specifier: workspace:^
-        version: link:packages/cli
       '@reelout/npm':
         specifier: workspace:^
         version: link:packages/npm
@@ -450,9 +453,15 @@ importers:
 
   packages/cli:
     dependencies:
+      '@reelout/context':
+        specifier: workspace:^
+        version: link:../context
       '@reelout/core':
         specifier: workspace:^
         version: link:../core
+      commander:
+        specifier: 'catalog:'
+        version: 15.0.0
       consola:
         specifier: 'catalog:'
         version: 3.4.2
@@ -2216,6 +2225,10 @@ packages:
 
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
+
+  commander@15.0.0:
+    resolution: {integrity: sha512-z67u4ZhzCL/Tydu1lJARtEZYWbWaN7oYLHbsuzocr6y4N6WZAagG3RQ4FW61V1/0+jImpj293XfrcYnd1qxtPg==}
+    engines: {node: '>=22.12.0'}
 
   commander@7.2.0:
     resolution: {integrity: sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==}
@@ -6167,6 +6180,8 @@ snapshots:
       color-name: 1.1.4
 
   color-name@1.1.4: {}
+
+  commander@15.0.0: {}
 
   commander@7.2.0: {}
 
