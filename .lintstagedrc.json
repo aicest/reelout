@@ -1,0 +1,5 @@
+{
+  "package.json": "sort-package-json",
+  "*.{js,jsx,ts,tsx}": ["eslint --fix", "tsx scripts/check.ts"],
+  "*": "prettier --write --ignore-unknown"
+}

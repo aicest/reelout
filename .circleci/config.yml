@@ -1,0 +1,20 @@
+version: 2.1
+orbs:
+  node: circleci/node@7
+  codecov: codecov/codecov@6
+jobs:
+  test:
+    macos:
+      xcode: 26.6
+    resource_class: m4pro.medium
+    steps:
+      - checkout
+      - run: corepack enable
+      - node/install-packages:
+          pkg-manager: pnpm
+      - run: pnpm validate
+      - codecov/upload
+workflows:
+  Test:
+    jobs:
+      - test

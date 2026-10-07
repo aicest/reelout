@@ -1,0 +1,7 @@
+{
+  "name": "ReelOut API Reference",
+  "entryPointStrategy": "packages",
+  "entryPoints": ["packages/*"],
+  "packageOptions": { "entryPoints": ["src/index.ts"] },
+  "projectDocuments": ["docs/*.md"]
+}

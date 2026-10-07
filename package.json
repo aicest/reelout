@@ -1,0 +1,91 @@
+{
+  "name": "reelout",
+  "version": "0.0.0",
+  "description": "Monorepo release CLI and toolkit.",
+  "keywords": [
+    "release",
+    "monorepo",
+    "versioning",
+    "changelog",
+    "npm",
+    "git",
+    "github",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aicest/reelout.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "imports": {},
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "module": "./src/index.ts",
+      "development": "./src/index.ts",
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "module": "./src/*.ts",
+      "development": "./src/*.ts",
+      "types": "./src/*.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "bin": "dist/cli.js",
+  "files": [
+    "./dist",
+    "./src"
+  ],
+  "scripts": {
+    "build": "pnpm -r build && vite build --ssr --sourcemap",
+    "clean": "rimraf -g **/{*.tsbuildinfo,coverage,dist,generated,storybook-static,test-results}",
+    "dev": "concurrently 'pnpm -r --parallel dev' 'vite build --ssr --watch'",
+    "format": "eslint --fix . && prettier --write .",
+    "lint": "eslint . && prettier --check . && tsx scripts/check.ts .",
+    "prepare": "husky",
+    "test": "vitest",
+    "validate": "pnpm i && pnpm clean && pnpm lint && typedoc --out generated && pnpm build && pnpm test run --coverage"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "catalog:",
+    "@commitlint/config-conventional": "catalog:",
+    "@commitlint/types": "catalog:",
+    "@eslint/js": "catalog:",
+    "@testing-library/jest-dom": "catalog:",
+    "@types/node": "catalog:",
+    "@vitest/coverage-istanbul": "catalog:",
+    "concurrently": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-import": "catalog:",
+    "from-async": "catalog:",
+    "glob": "catalog:",
+    "globals": "catalog:",
+    "husky": "catalog:",
+    "ignore": "catalog:",
+    "jsdom": "catalog:",
+    "lint-staged": "catalog:",
+    "memfs": "catalog:",
+    "prettier": "catalog:",
+    "rimraf": "catalog:",
+    "rollup-plugin-node-externals": "catalog:",
+    "sort-package-json": "catalog:",
+    "tempy": "catalog:",
+    "tslib": "catalog:",
+    "tsx": "catalog:",
+    "typedoc": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "unionfs": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  },
+  "packageManager": "pnpm@12.8.2+sha512.a5941679663d952c5f0ecc38ba98af98b4dc01b95780354f6894f2f873973cef2f7e2989d7db3ee5393938ae21f62fe06bcdf685d475ddad829a62095d2b8b11",
+  "engines": {
+    "node": ">=24.15"
+  }
+}
