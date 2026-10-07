@@ -11,6 +11,7 @@ import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { rootTemporaryDirectory } from 'tempy'
 import { beforeEach, vi } from 'vitest'
+import { repository } from './context'
 
 vi.mock(import('@reelout/core/util/execGit'), async (importActual) => {
   const { execGit } = await importActual()
@@ -48,6 +49,39 @@ vi.mock(
       showGitHistory: (...args: Parameters<typeof showGitHistory>) => {
         args[1] = { ...args[1], pageSize: 1 }
         return showGitHistory(...args)
+      },
+    }
+  }
+)
+
+vi.mock(
+  import('@reelout/core/git/repository/resolveGitRepository'),
+  async (importActual) => {
+    const { resolveGitRepository } = await importActual()
+    const { execGit } = await import('@reelout/core/util/execGit')
+
+    return {
+      resolveGitRepository: async (cwd: string) => {
+        const repo = await resolveGitRepository(cwd)
+
+        /* istanbul ignore next */
+        if (repo) {
+          return repo
+        }
+
+        try {
+          const origin = (
+            await execGit(cwd, ['remote', 'get-url', 'origin'])
+          ).trim()
+
+          /* istanbul ignore next */
+          if (origin?.startsWith(pathToFileURL(rootTemporaryDirectory).href)) {
+            return repository
+          }
+        } catch {}
+
+        /* istanbul ignore next */
+        return null
       },
     }
   }
