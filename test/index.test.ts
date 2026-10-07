@@ -14,6 +14,7 @@ test('exposes the correct API contract', () => {
       "formatFile",
       "interpolate",
       "isDefined",
+      "isMatch",
       "readJson",
       "unique",
       "writeJson",
