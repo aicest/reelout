@@ -56,6 +56,11 @@ export interface GitRepository {
   url: string
 }
 
+export interface GitAuthor {
+  name: string
+  email: string
+}
+
 export type CommitClassifier = (
   commit: GitCommit
 ) => ReleaseType | null | undefined
@@ -96,11 +101,13 @@ export interface ResolvedReleaseRule {
 }
 
 export interface ReleaseConfig {
+  author?: Partial<GitAuthor>
   classifier?: CommitClassifier | Partial<Record<ReleaseType, GitCommitType[]>>
   rules?: (ReleaseRule | string | false | null | undefined)[]
 }
 
 export interface ResolvedReleaseConfig {
+  author: GitAuthor
   classifier: CommitClassifier
   rules: ResolvedReleaseRule[]
 }
@@ -123,6 +130,7 @@ export interface ReleaseContext<P extends Package = Package> {
   repository: GitRepository | null
   ref: GitRef
   commit: GitCommit
+  author: GitAuthor
   classifier: CommitClassifier
   rules: ResolvedReleaseRule[]
   type: ReleaseTypeHint

@@ -1,6 +1,7 @@
 {
   "name": "@reelout/git",
   "version": "0.3.0",
+  "description": "Git integration for committing version changes.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aicest/reelout.git",
@@ -33,6 +34,9 @@
   "scripts": {
     "build": "vite build --ssr --sourcemap",
     "dev": "vite build --ssr --watch"
+  },
+  "dependencies": {
+    "@reelout/core": "workspace:^"
   },
   "engines": {
     "node": ">=24.15"

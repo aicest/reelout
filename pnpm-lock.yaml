@@ -492,7 +492,11 @@ importers:
         specifier: 'catalog:'
         version: 7.8.0
 
-  packages/git: {}
+  packages/git:
+    dependencies:
+      '@reelout/core':
+        specifier: workspace:^
+        version: link:../core
 
   packages/github:
     dependencies:
