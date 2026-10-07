@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Fai
 
+export const ALL_FILES = '**/*'
+
 export const DEFAULT_CHANGELOG_FILE = 'CHANGELOG.md'
 
 export const GIT_TRAILER_RELEASE_AGENT = 'Release-Agent'
