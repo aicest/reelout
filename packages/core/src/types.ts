@@ -2,6 +2,7 @@
 // Copyright (c) 2026 Fai
 
 import type { CommitBase, CommitNote } from 'conventional-commits-parser'
+import type { Hosts } from 'hosted-git-info'
 
 export type GitCommitType =
   | 'build'
@@ -39,6 +40,23 @@ export interface GitCommit extends CommitBase {
   files: readonly string[]
 }
 
+export interface GitRepository {
+  host: Hosts
+  owner: string
+  repo: string
+  url: string
+}
+
+export type ReleaseType = 'major' | 'minor' | 'patch'
+
+export interface ReleaseContext {
+  cwd: string
+  env: Readonly<NodeJS.ProcessEnv>
+  today: string
+  repository: GitRepository | null
+  dryRun: boolean
+}
+
 export interface Workspace {
   entry: string
   members: readonly string[] | null
@@ -61,4 +79,17 @@ export interface Package {
 export interface Tag {
   name: string
   message?: string | undefined
+}
+
+export interface Release {
+  type: ReleaseType
+  version?: string | null
+  tag?: Tag | null
+  changelog?: string | null
+}
+
+export interface ReleasePlan<P extends Package = Package> {
+  package: P
+  history: GitCommit[]
+  release: Release | null
 }

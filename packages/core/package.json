@@ -42,12 +42,18 @@
   },
   "dependencies": {
     "consola": "catalog:",
+    "conventional-changelog-conventionalcommits": "catalog:",
+    "conventional-changelog-writer": "catalog:",
     "conventional-commits-parser": "catalog:",
+    "mdast-util-from-markdown": "catalog:",
+    "mdast-util-to-markdown": "catalog:",
     "minimatch": "catalog:",
     "prettier": "catalog:",
     "semver": "catalog:"
   },
   "devDependencies": {
+    "@types/hosted-git-info": "catalog:",
+    "@types/mdast": "catalog:",
     "@types/semver": "catalog:"
   },
   "engines": {
