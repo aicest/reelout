@@ -37,7 +37,11 @@
   "dependencies": {
     "consola": "catalog:",
     "minimatch": "catalog:",
-    "prettier": "catalog:"
+    "prettier": "catalog:",
+    "semver": "catalog:"
+  },
+  "devDependencies": {
+    "@types/semver": "catalog:"
   },
   "engines": {
     "node": ">=24.15"

@@ -16,6 +16,7 @@ test('exposes the correct API contract', () => {
       "isCI",
       "isDefined",
       "isMatch",
+      "isSemVer",
       "isTruthyString",
       "readJson",
       "unique",

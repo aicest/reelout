@@ -185,6 +185,9 @@ catalogs:
     '@types/node':
       specifier: ^24.12.4
       version: 24.19.0
+    '@types/semver':
+      specifier: ^7.8.0
+      version: 7.8.0
     '@vitest/coverage-istanbul':
       specifier: ^5.0.3
       version: 5.0.3
@@ -239,6 +242,9 @@ catalogs:
     rollup-plugin-node-externals:
       specifier: ^9.0.1
       version: 9.0.1
+    semver:
+      specifier: ^7.8.5
+      version: 7.8.5
     sort-package-json:
       specifier: ^4.0.0
       version: 4.0.0
@@ -269,6 +275,9 @@ catalogs:
     vitest:
       specifier: ^5.0.3
       version: 5.0.3
+    yaml:
+      specifier: ^2.9.1
+      version: 2.9.1
 
 importers:
 
@@ -389,6 +398,13 @@ importers:
       prettier:
         specifier: 'catalog:'
         version: 3.9.9
+      semver:
+        specifier: 'catalog:'
+        version: 7.8.5
+    devDependencies:
+      '@types/semver':
+        specifier: 'catalog:'
+        version: 7.8.0
 
   packages/git: {}
 
@@ -401,12 +417,18 @@ importers:
       '@reelout/core':
         specifier: workspace:^
         version: link:../core
+      glob:
+        specifier: 'catalog:'
+        version: 13.0.6
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
       sort-package-json:
         specifier: 'catalog:'
         version: 4.0.0
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.1
     devDependencies:
       '@types/lodash-es':
         specifier: 'catalog:'
@@ -1194,6 +1216,9 @@ packages:
 
   '@types/node@24.19.0':
     resolution: {integrity: sha512-zY+5tKxXdhGh1PYI0ac+7juvEu4OI6vWtVVoj5i2m42jxAY1U+zHGt6QCyOFwykdP62sM3MJ9stoYYUw5aCWew==}
+
+  '@types/semver@7.8.0':
+    resolution: {integrity: sha512-1mAINjtQCXXeLkJ9ehXkwOcBpqtLxiVtKhpUf83DdRNdQKV0iXZpaHYqRr7nj+wvxuJzoAmAwXI+sCNMv1CzLQ==}
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
@@ -3606,6 +3631,8 @@ snapshots:
   '@types/node@24.19.0':
     dependencies:
       undici-types: 7.24.6
+
+  '@types/semver@7.8.0': {}
 
   '@types/unist@3.0.3': {}
 

@@ -36,8 +36,10 @@
   },
   "dependencies": {
     "@reelout/core": "workspace:^",
+    "glob": "catalog:",
     "lodash-es": "catalog:",
-    "sort-package-json": "catalog:"
+    "sort-package-json": "catalog:",
+    "yaml": "catalog:"
   },
   "devDependencies": {
     "@types/lodash-es": "catalog:"
