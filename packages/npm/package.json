@@ -1,6 +1,7 @@
 {
   "name": "@reelout/npm",
   "version": "0.3.0",
+  "description": "NPM integration for publishing packages.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aicest/reelout.git",
@@ -35,14 +36,26 @@
     "dev": "vite build --ssr --watch"
   },
   "dependencies": {
+    "@npmcli/config": "catalog:",
     "@reelout/core": "workspace:^",
+    "@reelout/github": "workspace:^",
+    "@reelout/gitlab": "workspace:^",
+    "@yarnpkg/core": "catalog:",
+    "@yarnpkg/fslib": "catalog:",
+    "@yarnpkg/plugin-npm": "catalog:",
+    "consola": "catalog:",
     "glob": "catalog:",
+    "hosted-git-info": "catalog:",
     "lodash-es": "catalog:",
+    "semver": "catalog:",
     "sort-package-json": "catalog:",
     "yaml": "catalog:"
   },
   "devDependencies": {
-    "@types/lodash-es": "catalog:"
+    "@types/hosted-git-info": "catalog:",
+    "@types/lodash-es": "catalog:",
+    "@types/npmcli__config": "catalog:",
+    "@types/semver": "catalog:"
   },
   "engines": {
     "node": ">=24.15"

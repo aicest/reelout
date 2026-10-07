@@ -1,0 +1,59 @@
+diff --git a/index.d.ts b/index.d.ts
+index 8053bce2369b4228022d1c2132fb6bed802804e9..10ae5216cef8903adf0011eed5265d9f6b7b6dd2 100644
+--- a/index.d.ts
++++ b/index.d.ts
+@@ -167,11 +167,21 @@ declare class Config<Definitions extends Config.DefinitionsObject = Config.Defin
+      * >  ```
+      */
+     isDefault(key: keyof Definitions): boolean;
++
++    loadBuiltinConfig(): Promise<void>
++    loadProjectConfig(): Promise<void>
++    loadUserConfig(): Promise<void>
++    loadGlobalConfig(): Promise<void>
++
+     /**
+      * Save the config file specified by the `where` param.  Must be one of
+      * `project`, `user`, `global`, `builtin`.
+      */
+     save(where: Config.ConfFileType): Promise<void>;
++
++    clearCredentialsByURI(uri: string, level?: Config.ConfFileType): void
++    setCredentialsByURI(uri: string, creds: Config.Credentials): void
++    getCredentialsByURI(uri: string): Config.Credentials
+ }
+ 
+ declare class Umask {
+@@ -253,4 +263,14 @@ declare namespace Config {
+     type Problem =
+         | { action: "delete"; key: string; where: ConfType }
+         | { action: "rename"; from: string; to: string; where: ConfType };
++
++    interface Credentials {
++        email?: string
++        token?: string
++        username?: string
++        password?: string
++        auth?: string
++        certfile?: string
++        keyfile?: string
++    }
+ }
+diff --git a/lib/nerf-dart.d.ts b/lib/nerf-dart.d.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..862b7ed8128fe22d2a0f08ac0614b1019d2259f2
+--- /dev/null
++++ b/lib/nerf-dart.d.ts
+@@ -0,0 +1,12 @@
++/**
++ * Maps a URL to an identifier.
++ *
++ * Name courtesy schiffertronix media LLC, a New Jersey corporation
++ *
++ * @param {String} uri The URL to be nerfed.
++ *
++ * @returns {String} A nerfed URL.
++ */
++declare function nerfDart(url: string): string;
++
++export = nerfDart;

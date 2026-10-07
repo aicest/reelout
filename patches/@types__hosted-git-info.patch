@@ -1,0 +1,13 @@
+diff --git a/index.d.ts b/index.d.ts
+index 8e12de2767aa21fc18e53307621682bd75925648..a49d8e11a902c25901e1aa5425870a6258bf8660 100644
+--- a/index.d.ts
++++ b/index.d.ts
+@@ -59,6 +59,8 @@ declare class GitHost {
+ declare namespace GitHost {
+     function fromUrl(gitUrl: string, opts?: Options): GitHost | undefined;
+ 
++    function fromManifest(manifest: object, opts?: Options): GitHost | string | undefined;
++
+     interface Options {
+         noCommittish?: boolean | undefined;
+         noGitPlus?: boolean | undefined;
