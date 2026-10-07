@@ -503,6 +503,9 @@ importers:
       '@octokit/rest':
         specifier: 'catalog:'
         version: 22.0.1
+      '@reelout/core':
+        specifier: workspace:^
+        version: link:../core
 
   packages/gitlab:
     dependencies:

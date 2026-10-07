@@ -1,6 +1,7 @@
 {
   "name": "@reelout/github",
   "version": "0.2.0",
+  "description": "GitHub integration for automating releases.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aicest/reelout.git",
@@ -35,7 +36,8 @@
     "dev": "vite build --ssr --watch"
   },
   "dependencies": {
-    "@octokit/rest": "catalog:"
+    "@octokit/rest": "catalog:",
+    "@reelout/core": "workspace:^"
   },
   "engines": {
     "node": ">=24.15"

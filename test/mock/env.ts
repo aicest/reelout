@@ -11,6 +11,7 @@ beforeEach(() => {
   vi.stubEnv('ACTIONS_ID_TOKEN_REQUEST_TOKEN', undefined)
   vi.stubEnv('ACTIONS_ID_TOKEN_REQUEST_URL', undefined)
   vi.stubEnv('CI', undefined)
+  vi.stubEnv('GITHUB_TOKEN', undefined)
   vi.stubEnv('HOME', (HOME_DIR = temporaryDirectory()))
   vi.stubEnv('NPM_ID_TOKEN', undefined)
   vi.stubEnv('NPM_TOKEN', undefined)
