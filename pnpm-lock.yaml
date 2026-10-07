@@ -221,6 +221,9 @@ catalogs:
     memfs:
       specifier: ^4.80.0
       version: 4.80.0
+    minimatch:
+      specifier: ^10.2.6
+      version: 10.2.6
     prettier:
       specifier: ^3.9.9
       version: 3.9.9
@@ -374,6 +377,9 @@ importers:
       consola:
         specifier: 'catalog:'
         version: 3.4.2
+      minimatch:
+        specifier: 'catalog:'
+        version: 10.2.6
       prettier:
         specifier: 'catalog:'
         version: 3.9.9

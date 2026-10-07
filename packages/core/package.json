@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "consola": "catalog:",
+    "minimatch": "catalog:",
     "prettier": "catalog:"
   },
   "engines": {
