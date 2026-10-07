@@ -10,6 +10,7 @@ test('exposes the correct API contract', () => {
       "execCommand",
       "execGit",
       "formatFile",
+      "interpolate",
     ]
   `)
 })
