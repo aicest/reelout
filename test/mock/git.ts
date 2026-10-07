@@ -12,6 +12,33 @@ import { pathToFileURL } from 'node:url'
 import { rootTemporaryDirectory } from 'tempy'
 import { beforeEach, vi } from 'vitest'
 
+vi.mock(import('@reelout/core/util/execGit'), async (importActual) => {
+  const { execGit } = await importActual()
+
+  return {
+    execGit: vi.fn((...args: Parameters<typeof execGit>) => {
+      if (args[1][0] === 'fetch') {
+        const promise = (async (): Promise<string> => {
+          const remote = (
+            await execGit(args[0], ['remote', 'get-url', 'origin'], args[2])
+          ).trim()
+
+          /* istanbul ignore next */
+          if (!remote.startsWith(pathToFileURL(rootTemporaryDirectory).href)) {
+            return Promise.resolve('')
+          }
+
+          return execGit(...args)
+        })()
+
+        return promise as ReturnType<typeof execGit>
+      }
+
+      return execGit(...args)
+    }),
+  }
+})
+
 vi.mock(
   import('@reelout/core/git/history/showGitHistory'),
   async (importActual) => {
