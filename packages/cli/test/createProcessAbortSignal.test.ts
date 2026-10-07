@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Fai
 
-import { createProcessAbortSignal } from '@reelout/core'
+import { createProcessAbortSignal } from '@reelout/cli'
 import { expect, test, vi } from 'vitest'
 
 test('returns an AbortSignal containing a controller and a disposable cleanup method in a non-aborted state', () => {

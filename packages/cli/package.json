@@ -1,6 +1,7 @@
 {
   "name": "@reelout/cli",
   "version": "0.2.0",
+  "description": "CLI for running release workflows.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aicest/reelout.git",
@@ -35,7 +36,9 @@
     "dev": "vite build --ssr --watch"
   },
   "dependencies": {
+    "@reelout/context": "workspace:^",
     "@reelout/core": "workspace:^",
+    "commander": "catalog:",
     "consola": "catalog:"
   },
   "engines": {
