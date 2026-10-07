@@ -363,6 +363,9 @@ importers:
       '@eslint/js':
         specifier: 'catalog:'
         version: 10.0.1(eslint@10.12.0(jiti@2.6.1)(supports-color@10.2.2))
+      '@reelout/github':
+        specifier: workspace:^
+        version: link:packages/github
       '@reelout/npm':
         specifier: workspace:^
         version: link:packages/npm
