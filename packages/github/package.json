@@ -34,6 +34,9 @@
     "build": "vite build --ssr --sourcemap",
     "dev": "vite build --ssr --watch"
   },
+  "dependencies": {
+    "@octokit/rest": "catalog:"
+  },
   "engines": {
     "node": ">=24.15"
   }
