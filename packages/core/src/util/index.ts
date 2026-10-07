@@ -3,3 +3,4 @@
 
 export * from './execCommand'
 export * from './execGit'
+export * from './formatFile'

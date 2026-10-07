@@ -366,7 +366,11 @@ importers:
 
   packages/context: {}
 
-  packages/core: {}
+  packages/core:
+    dependencies:
+      prettier:
+        specifier: 'catalog:'
+        version: 3.9.9
 
   packages/git: {}
 
