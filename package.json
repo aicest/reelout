@@ -59,6 +59,7 @@
     "@commitlint/config-conventional": "catalog:",
     "@commitlint/types": "catalog:",
     "@eslint/js": "catalog:",
+    "@reelout/npm": "workspace:^",
     "@testing-library/jest-dom": "catalog:",
     "@types/node": "catalog:",
     "@vitest/coverage-istanbul": "catalog:",

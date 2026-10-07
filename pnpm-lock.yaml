@@ -320,6 +320,9 @@ importers:
       '@eslint/js':
         specifier: 'catalog:'
         version: 10.0.1(eslint@10.12.0(jiti@2.6.1)(supports-color@10.2.2))
+      '@reelout/npm':
+        specifier: workspace:^
+        version: link:packages/npm
       '@testing-library/jest-dom':
         specifier: 'catalog:'
         version: 7.0.1(@testing-library/dom@10.4.2)(vitest@5.0.3)
