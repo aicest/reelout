@@ -188,6 +188,9 @@ catalogs:
     concurrently:
       specifier: ^10.0.5
       version: 10.0.5
+    consola:
+      specifier: ^3.4.2
+      version: 3.4.2
     eslint:
       specifier: ^10.12.0
       version: 10.12.0
@@ -368,6 +371,9 @@ importers:
 
   packages/core:
     dependencies:
+      consola:
+        specifier: 'catalog:'
+        version: 3.4.2
       prettier:
         specifier: 'catalog:'
         version: 3.9.9
@@ -1408,6 +1414,10 @@ packages:
     resolution: {integrity: sha512-JaP/CoftUrCcAFW/g//RbgEGwlelnEae6cfBLgH6ZdO6s8jPkn6p9SB9u6pdVxYXoiSnFqseOlHfrEfF82TVOg==}
     engines: {node: '>=22'}
     hasBin: true
+
+  consola@3.4.2:
+    resolution: {integrity: sha512-5IKcdX0nnYavi6G7TtOhwkYzyjfJlatbjMjuLSfE2kYT5pMDOilZ4OvMhi637CcDICTmz3wARPoyhqyX1Y+XvA==}
+    engines: {node: ^14.18.0 || >=16.10.0}
 
   conventional-changelog-angular@9.4.0:
     resolution: {integrity: sha512-HdxRxuS8bBXVIuo4V82gvSwAXT0vYQUizrjs/izmPg5JdDstr8v8I5hduGL3iQbG+o310dUDxC4+LetuS5hu9w==}
@@ -3869,6 +3879,8 @@ snapshots:
       supports-color: 10.2.2
       tree-kill: 1.2.2
       yargs: 18.0.0
+
+  consola@3.4.2: {}
 
   conventional-changelog-angular@9.4.0:
     dependencies:
