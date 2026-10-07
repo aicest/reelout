@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Fai
 
+import type { ReleaseHookName } from '#types'
+import { Writable } from 'node:stream'
+
 export const ALL_FILES = '**/*'
 
 export const DEFAULT_CHANGELOG_FILE = 'CHANGELOG.md'
@@ -82,3 +85,20 @@ const FULL_SEMVER_PATTERN = `${OPTIONAL_VERSION_PREFIX}?${CAPTURED_SEMVER_VERSIO
  * @see {@link https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string SemVer Specification}
  */
 export const SEMVER_REGEX = new RegExp(FULL_SEMVER_PATTERN)
+
+export const DEV_NULL = new Writable({
+  /* istanbul ignore next */
+  write(_chunk, _encoding, callback) {
+    callback()
+  },
+})
+
+export const RELEASE_HOOK_NAMES = [
+  'configure',
+  'discover',
+  'analyze',
+  'build',
+  'write',
+  'publish',
+  'finalize',
+] as const satisfies ReleaseHookName[]

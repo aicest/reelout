@@ -3,6 +3,7 @@
 
 export * from './buildTrailerPattern'
 export * from './compact'
+export * from './createProcessAbortSignal'
 export * from './execCommand'
 export * from './execGit'
 export * from './formatError'

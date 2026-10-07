@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Fai
 
+import type { ConsolaInstance } from 'consola/core'
 import type { CommitBase, CommitNote } from 'conventional-commits-parser'
 import type { Hosts } from 'hosted-git-info'
+import type { HookHandler } from './plugin'
 
 export type GitCommitType =
   | 'build'
@@ -49,12 +51,28 @@ export interface GitRepository {
 
 export type ReleaseType = 'major' | 'minor' | 'patch'
 
-export interface ReleaseContext {
+export type ReleaseStatus = 'success' | 'failure'
+
+export interface ReleasePhase {
+  hook: ReleaseHookName
+  plugin: string
+}
+
+export interface ReleaseContext<P extends Package = Package> {
   cwd: string
   env: Readonly<NodeJS.ProcessEnv>
   today: string
+  signal: AbortSignal | undefined
+  stdout: NodeJS.WritableStream
+  stderr: NodeJS.WritableStream
+  logger: ConsolaInstance
   repository: GitRepository | null
   dryRun: boolean
+  packages: P[]
+  plans: ReleasePlan<P>[]
+  status: ReleaseStatus | null
+  phase: ReleasePhase | null
+  error: unknown
 }
 
 export interface Workspace {
@@ -92,4 +110,53 @@ export interface ReleasePlan<P extends Package = Package> {
   package: P
   history: GitCommit[]
   release: Release | null
+}
+
+export interface ReleaseHookDefinition<P extends Package = Package> {
+  priority?: number | undefined
+  handler: HookHandler<ReleaseContext<P>>
+}
+
+export type ReleaseHook<P extends Package = Package> =
+  HookHandler<ReleaseContext<P>> | ReleaseHookDefinition<P>
+
+export interface ReleasePlugin<P extends Package = Package> {
+  name: string
+  version: string
+  configure?: ReleaseHook<P> | null | undefined
+  discover?: ReleaseHook<P> | null | undefined
+  analyze?: ReleaseHook<P> | null | undefined
+  build?: ReleaseHook<P> | null | undefined
+  write?: ReleaseHook<P> | null | undefined
+  publish?: ReleaseHook<P> | null | undefined
+  finalize?: ReleaseHook<P> | null | undefined
+}
+
+export type ReleaseHookName = Exclude<keyof ReleasePlugin, 'name' | 'version'>
+
+export interface ReleaseReport {
+  status: ReleaseStatus | null
+  phase: ReleasePhase | null
+  error: string | null
+  packages: {
+    location: string
+    name: string | undefined
+    version: string
+  }[]
+  plans: {
+    package: {
+      provider: string | undefined
+      entry: boolean
+      location: string
+      name: string | undefined
+      version: string
+      private: boolean
+    }
+    release: {
+      type: ReleaseType
+      version: string
+      tag: string | null | undefined
+      changelog: string | null | undefined
+    }
+  }[]
 }

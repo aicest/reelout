@@ -1,6 +1,7 @@
 {
   "name": "@reelout/core",
   "version": "0.3.0",
+  "description": "Core release lifecycle orchestration.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aicest/reelout.git",
