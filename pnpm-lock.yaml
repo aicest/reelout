@@ -261,6 +261,10 @@ catalogs:
 importers:
 
   .:
+    dependencies:
+      '@reelout/core':
+        specifier: workspace:^
+        version: link:packages/core
     devDependencies:
       '@commitlint/cli':
         specifier: 'catalog:'
