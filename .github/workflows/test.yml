@@ -1,0 +1,30 @@
+name: Test
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: write
+  packages: write
+  issues: write
+  pull-requests: write
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm validate
+      - uses: codecov/codecov-action@v7

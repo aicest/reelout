@@ -1,0 +1,27 @@
+version: 2.1
+orbs:
+  node: circleci/node@7
+jobs:
+  test:
+    macos:
+      xcode: '26.6'
+    resource_class: m4pro.medium
+    steps:
+      - checkout
+      - node/install:
+          node-version: '24'
+      - run: corepack enable
+      - node/install-packages:
+          pkg-manager: pnpm
+      - run: pnpm validate
+      - run:
+          name: Upload Coverage to Codecov
+          command: |
+            curl -fLSs https://uploader.codecov.io/latest/macos/codecov -o codecov
+            chmod +x codecov
+            unset NODE_OPTIONS
+            ./codecov -t ${CODECOV_TOKEN} --verbose
+workflows:
+  Test:
+    jobs:
+      - test

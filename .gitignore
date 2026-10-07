@@ -1,0 +1,13 @@
+*.pem
+*.tsbuildinfo
+.env.local
+.next
+.yarn
+coverage
+dist
+generated
+next-env.d.ts
+node_modules
+playwright-report
+storybook-static
+test-results

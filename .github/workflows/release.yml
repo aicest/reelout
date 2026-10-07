@@ -1,0 +1,29 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+permissions:
+  contents: write
+  packages: write
+  issues: write
+  pull-requests: write
+  id-token: write
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm validate
+      - run: node dist/cli.js

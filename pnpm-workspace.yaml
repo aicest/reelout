@@ -1,0 +1,53 @@
+packages:
+  - packages/*
+
+allowBuilds:
+  esbuild: true
+
+blockExoticSubdeps: true
+
+catalog:
+  '@commitlint/cli': ^21.2.3
+  '@commitlint/config-conventional': ^21.2.3
+  '@commitlint/types': ^21.2.3
+  '@eslint/js': ^10.0.1
+  '@testing-library/jest-dom': ^7.0.1
+  '@types/node': ^24.12.4
+  '@vitest/coverage-istanbul': ^5.0.3
+  concurrently: ^10.0.5
+  eslint: ^10.12.0
+  eslint-plugin-import: ^2.32.0
+  from-async: ^1.1.1
+  glob: ^13.0.6
+  globals: ^17.13.0
+  husky: ^9.1.7
+  ignore: ^7.0.12
+  jsdom: ^30.1.2
+  lint-staged: ^17.6.0
+  memfs: ^4.80.0
+  prettier: ^3.9.9
+  rimraf: ^6.1.3
+  rollup-plugin-node-externals: ^9.0.1
+  sort-package-json: ^4.0.0
+  tempy: ^3.2.0
+  tslib: ^2.8.1
+  tsx: ^4.23.15
+  typedoc: ^0.28.20
+  typescript: npm:@typescript/typescript6@^6.0.2
+  typescript-eslint: ^8.71.1
+  unionfs: ^4.6.0
+  vite: ^8.3.3
+  vitest: ^5.0.3
+catalogMode: prefer
+
+cleanupUnusedCatalogs: true
+
+engineStrict: true
+
+linkWorkspacePackages: true
+
+minimumReleaseAge: 0
+
+updateConfig:
+  ignoreDependencies:
+    - '@types/node'
