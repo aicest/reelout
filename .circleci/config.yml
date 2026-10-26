@@ -13,6 +13,9 @@ jobs:
       - node/install-packages:
           pkg-manager: pnpm
       - run: pnpm validate
+      - run:
+          name: Fix Homebrew ca-certificates link
+          command: brew link --overwrite ca-certificates 2>/dev/null || true
       - codecov/upload
 workflows:
   Test:
