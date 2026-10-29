@@ -1,7 +1,14 @@
 *.pem
 *.tsbuildinfo
+.DS_Store
+.claude
+.codeartsdoer
+.codex
+.cursor
 .env.local
+.idea
 .next
+.workbuddy-ai
 .yarn
 coverage
 dist
