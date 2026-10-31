@@ -2,7 +2,7 @@
 // Copyright (c) 2026 Fai
 
 import type { ReleaseContext, ReleasePlan } from '@reelout/core'
-import { execCommand, isVerboseOutputAllowed } from '@reelout/core'
+import { execCommand, isQuietEnvironment } from '@reelout/core'
 import path from 'node:path'
 import { inspectPackageManager } from './inspectPackageManager'
 import { prepareAuth } from './prepareAuth'
@@ -75,16 +75,12 @@ export async function publishPackage(
 
   // Package manager output is extremely verbose and the package managers
   // disagree on where it goes: npm writes its whole notice block to stderr
-  // while pnpm keeps everything on stdout. Each stream is therefore gated on
-  // its own destination: forward it only when someone will actually keep it,
-  // meaning an attached terminal or a CI provider that records the job log.
-  // Anywhere else (agent sandboxes, captured pipes) `execCommand` buffers the
-  // output and surfaces it in the thrown error, stderr first, so a real
-  // failure is still reported with its diagnostics.
-  const forwardStdout = isVerboseOutputAllowed(context.stdout, context.env)
-  const forwardStderr = isVerboseOutputAllowed(context.stderr, context.env)
+  // while pnpm keeps everything on stdout. A quiet environment keeps neither,
+  // so both streams are withheld and `execCommand` surfaces the buffered
+  // output, stderr first, when the publish fails.
+  const quiet = isQuietEnvironment(context)
 
-  if (!forwardStdout || !forwardStderr) {
+  if (quiet) {
     context.logger.debug(
       'Suppressing publish output because no terminal or CI log is attached.'
     )
@@ -94,7 +90,7 @@ export async function publishPackage(
     cwd: path.resolve(context.cwd, plan.package.location),
     env: { ...context.env, ...env },
     signal: context.signal,
-    stdout: forwardStdout ? context.stdout : undefined,
-    stderr: forwardStderr ? context.stderr : undefined,
+    stdout: quiet ? undefined : context.stdout,
+    stderr: quiet ? undefined : context.stderr,
   })
 }

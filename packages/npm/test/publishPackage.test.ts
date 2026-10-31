@@ -53,7 +53,6 @@ afterEach(() => {
 test('streams publish output when attached to an interactive terminal', async () => {
   resolvePackageManager.mockResolvedValue('npm')
   Object.assign(context.stdout, { isTTY: true })
-  Object.assign(context.stderr, { isTTY: true })
 
   await publishPackage(context, plan)
 
@@ -62,14 +61,14 @@ test('streams publish output when attached to an interactive terminal', async ()
   ])
 })
 
-test('gates each stream on its own destination', async () => {
+test('judges the environment from stdout alone', async () => {
   resolvePackageManager.mockResolvedValue('npm')
   Object.assign(context.stderr, { isTTY: true })
 
   await publishPackage(context, plan)
 
   expect(outputStreams).toStrictEqual([
-    { stdout: undefined, stderr: context.stderr },
+    { stdout: undefined, stderr: undefined },
   ])
 })
 
