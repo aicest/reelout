@@ -1,76 +1,74 @@
 ---
 name: test-naming
-description: 'Guidelines for writing clear, intent-driven, and context-rich test names in JavaScript and TypeScript.'
+description: 'Helps write, rename, and review precise test titles based on asserted behavior and local conventions in JavaScript and TypeScript suites, including Jest, Vitest, Playwright, and Cypress. Use when the user asks to name or improve test titles.'
+license: MIT
 ---
 
-# Test Naming Guidelines
+# Test Naming
 
-Apply these guidelines across JavaScript and TypeScript test runners (Jest, Vitest, Playwright, Cypress) to ensure test names clearly communicate domain logic, observable behavior, and exact failure context.
+Write test titles that make clear what the test verifies and, when relevant, under which condition. A useful title helps readers understand a test failure from the report without opening the file. Apply these principles to JavaScript and TypeScript suites, including Jest, Vitest, Playwright, Cypress, and similar frameworks.
 
-## 1. Core Principles
+## Workflow
 
-- **Focus on observable behavior over implementation**: Describe external side effects, returned values, emitted events, or thrown errors. Avoid referencing internal function names, private properties, or mock implementation details.
-  - **Prefer:** `persists session token to secure storage on successful login`
-  - **Avoid:** `calls localStorage.setItem on login`
+1. **Inspect the test and its context.** Read its assertions, setup, fixtures, title syntax, and parent suite names. For a rename or review, check nearby tests for local conventions without repeating vague wording.
+2. **Identify what the test verifies.** Determine the observable behavior asserted: a result, return value, side effect, state change, rejection, or interaction.
+3. **Draft a precise title.** Name the outcome and include a condition when it distinguishes the case or changes the expected behavior. Do not narrate setup or invent details the test does not establish.
+4. **Check the title against the assertions.** Ensure it neither overstates nor understates what they verify, and that it remains clear in the test report alongside any parent suite title.
+5. **Respect the requested scope.** For a review, explain the issue and suggest a replacement; do not edit unless asked. For a rename, change only the requested titles. Do not modify test logic, assertions, fixtures, or production code unless separately requested.
+6. **Surface uncertainty.** If the setup or assertions do not establish the behavior clearly enough for an accurate title, do not guess. Explain the ambiguity and ask for clarification when it cannot be resolved from nearby code.
 
-- **Reflect business rules and branch logic**: Map test names directly to domain constraints, edge cases, and execution paths.
-  - **Prefer:** `applies 15% seasonal discount when cart total exceeds $100`
-  - **Avoid:** `calculates cart total correctly`
+## Naming Principles
 
-- **Eliminate filler words**: Omit non-descriptive terms such as `works`, `handles`, `test`, `correctly`, or `should`. Replace them with explicit triggers and expected outcomes.
-  - **Prefer:** `throws InvalidCredentialsError when password field is empty`
-  - **Avoid:** `handles password errors correctly`
+- **Describe behavior, not implementation.** Prefer the observable result, return value, state change, error, or meaningful interaction over incidental details such as helper names, internal calls, or mock setup.
+  - **Prefer:** `persists the session token after a successful login`
+  - **Avoid:** `calls setItem`
+- **Choose verbs that match the assertion.** Distinguish a synchronous throw from a rejected promise when relevant. Describe resolved values, rendered state, or emitted events only as observed.
+- **Name interactions when they are the contract.** Some tests verify collaboration or a dependency call rather than a user-visible outcome. Name the relevant actor and interaction; include arguments, counts, or ordering only when asserted.
+- **Include the distinguishing condition.** Name the input, state, role, event, boundary, or context that separates this case from related tests. Avoid generic titles such as `handles invalid input`.
+  - **Prefer:** `rejects uploads larger than the configured size limit`
+  - **Avoid:** `handles invalid uploads`
+- **State negative outcomes explicitly.** Say what is rejected, prevented, denied, or absent, and include the relevant condition when it aids understanding.
+  - **Prefer:** `does not retry the request after a 401 response`
+  - **Avoid:** `does not work with expired tokens`
+- **State the claim, not every step.** When a test checks several details of one contract, describe their shared outcome. Do not turn setup or assertion mechanics into a step-by-step title, and do not split or rewrite the test unless asked.
+- **Be concise without losing meaning.** Remove filler. Words such as `should` and `correctly` are useful only when they express the expectation or match local style.
+- **Use the parent suite as context.** Avoid repeating information that is clear from the enclosing suite, while keeping the test title understandable in reports.
+- **Follow clear local conventions.** Match neighboring tests' capitalization, tense, punctuation, and phrasing unless that would reduce accuracy or clarity.
+- **Do not invent details.** Use specific values and names only when supported by the test or needed to describe its asserted scenario; do not add them merely to make a title sound precise.
 
-- **State positive and negative outcomes explicitly**: Assert positive outcomes directly. Express negative behaviors or non-occurrences using strong action verbs (`rejects`, `prevents`, `denies`) or clear negations (`does not render`, `does not retry`, `does not mutate`).
-  - **Positive:** `renders success banner when form submits successfully`
-  - **Negative:** `does not retry request when server returns 401 status`
-  - **Avoid:** `does not work with expired token`
+## Useful Title Patterns
 
-## 2. Structural Formula
+A useful starting pattern is:
 
-Format test names using an outcome-first pattern:
+> `[verified outcome] when [distinguishing condition]`
 
-> `[expected outcome] [when / given / if] [input condition or context]`
+This is a guide, not a required formula. For a particular test, structures such as `given [context]`, `while [state]`, or an event-driven title may be clearer.
 
-| Scenario            | Example Pattern                                               |
-| :------------------ | :------------------------------------------------------------ |
-| **Positive Path**   | `returns gold tier pricing when account age exceeds 365 days` |
-| **Negative Path**   | `rejects file upload when document size exceeds 10MB`         |
-| **Non-Occurrence**  | `does not mutate original payload when transformation fails`  |
-| **State-Dependent** | `disables submit button while payment processing is pending`  |
+| Verified case            | Example title                                                   |
+| ------------------------ | --------------------------------------------------------------- |
+| Successful outcome       | `returns discounted pricing when the account qualifies`         |
+| Rejection                | `rejects the upload when the file exceeds its configured limit` |
+| Non-occurrence           | `does not send a notification when alerts are disabled`         |
+| State-dependent behavior | `disables submit while payment is processing`                   |
+| Error contract           | `throws InvalidTokenError when the token signature is invalid`  |
 
-## 3. Scope and Granularity
+Use actual error names, configured thresholds, units, and values when they matter to the assertion. For boundary cases, use the tested value and relevant limit; never guess or substitute illustrative values.
 
-- **One behavior per test**: Target a single outcome under one specific scenario per test block.
-- **Specify concrete inputs and roles**: Reference explicit user roles, flags, or boundary values rather than generic abstractions.
-  - **Prefer:** `denies edit access when user role is viewer`
-  - **Avoid:** `handles invalid user permissions`
-- **Maintain structural consistency**: Standardize condition prefixes (`when`, `given`, `if`) across related test files to maximize suite scannability.
+## Parameterized Tests
 
-## 4. Formatting and Style
+- Make each generated title identify the case when different data produces different expected behavior.
+- Preserve the framework's interpolation syntax; do not introduce unsupported placeholders.
+- Include a value in the rendered title only if it clarifies the failing case or exercised condition. Indistinguishable raw data can make reports noisy.
+- When practical, inspect representative rendered titles as well as the template. Ensure placeholders produce useful, unambiguous output without missing or duplicated values.
 
-- **Sentence case**: Use lowercase sentence case for seamless readability in CLI terminal logs and CI runner outputs.
-- **Minimal punctuation**: Omit trailing periods. Reserve commas strictly for separating complex compound conditions.
-- **Concise context**: Include only the essential inputs and state conditions required to uniquely distinguish the test within its suite.
+## Final Review Checklist
 
-## 5. Patterns and Anti-Patterns
+Before proposing or applying a title, confirm:
 
-| Category              | Recommended Pattern                                           | Anti-Pattern                |
-| :-------------------- | :------------------------------------------------------------ | :-------------------------- |
-| **Positive State**    | `displays balance total when user session is active`          | `handles session state`     |
-| **Validation**        | `returns 422 status code when email field is missing`         | `handles email validation`  |
-| **State Guard**       | `prevents duplicate subscription when user has active plan`   | `tests checkout edge case`  |
-| **Negative Behavior** | `does not trigger webhook when notification flag is disabled` | `checks webhook flag works` |
-| **Access Control**    | `denies export access when user lacks admin permissions`      | `checks RBAC logic works`   |
-| **Error Handling**    | `throws InvalidTokenError when JWT signature is expired`      | `works with invalid tokens` |
-
-## 6. Review Checklist
-
-Before committing a test, verify that the test name:
-
-- [ ] Describes an observable outcome rather than an internal implementation detail.
-- [ ] Maps directly to a single business rule, domain constraint, or branch condition.
-- [ ] Explicitly defines both the expected outcome (including `does not ...` negations) and the driving condition.
-- [ ] Omits non-descriptive filler words (`works`, `handles`, `correctly`, `should`).
-- [ ] Makes CI failure logs self-explanatory and instantly searchable.
-- [ ] Aligns structurally with neighboring tests within the suite.
+- It describes what the assertions verify, not what the test author may have intended.
+- The outcome and any necessary condition are specific and unambiguous.
+- Any negative result is stated explicitly.
+- It does not duplicate context already supplied by the parent suite title.
+- It follows local conventions without compromising accuracy or clarity.
+- It makes sense in test output, including for parameterized cases.
+- Its verbs accurately describe the observed result, including synchronous errors versus asynchronous rejections where relevant.
