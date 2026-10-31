@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aicest/reelout.git"
+    "url": "git+https://github.com/reelout/reelout.git"
   },
   "license": "MIT",
   "type": "module",

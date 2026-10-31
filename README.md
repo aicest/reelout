@@ -1,7 +1,7 @@
 # ReelOut
 
 [![NPM Version](https://img.shields.io/npm/v/reelout)](https://www.npmjs.com/package/reelout)
-[![Codecov](https://img.shields.io/codecov/c/github/aicest/reelout?token=FSP5JC9E16)](https://app.codecov.io/github/aicest/reelout)
+[![Codecov](https://img.shields.io/codecov/c/github/reelout/reelout?token=FSP5JC9E16)](https://app.codecov.io/github/reelout/reelout)
 
 ReelOut is a plugin-driven release automation tool engineered specifically for monorepos. By analyzing [Conventional Commits](https://conventionalcommits.org), it autonomously calculates version bumps, updates package manifests, generates changelogs, creates tags, and publishes packages to your registry.
 
