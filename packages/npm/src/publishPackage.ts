@@ -2,7 +2,7 @@
 // Copyright (c) 2026 Fai
 
 import type { ReleaseContext, ReleasePlan } from '@reelout/core'
-import { execCommand } from '@reelout/core'
+import { execCommand, isQuietEnvironment } from '@reelout/core'
 import path from 'node:path'
 import { inspectPackageManager } from './inspectPackageManager'
 import { prepareAuth } from './prepareAuth'
@@ -73,11 +73,24 @@ export async function publishPackage(
 
   if (isPnpm) commandArgs.push('--no-git-checks')
 
+  // Package manager output is extremely verbose and the package managers
+  // disagree on where it goes: npm writes its whole notice block to stderr
+  // while pnpm keeps everything on stdout. A quiet environment keeps neither,
+  // so both streams are withheld and `execCommand` surfaces the buffered
+  // output, stderr first, when the publish fails.
+  const quiet = isQuietEnvironment(context)
+
+  if (quiet) {
+    context.logger.debug(
+      'Suppressing publish output because no terminal or CI log is attached.'
+    )
+  }
+
   await execCommand(packageManager.name, commandArgs, {
     cwd: path.resolve(context.cwd, plan.package.location),
     env: { ...context.env, ...env },
     signal: context.signal,
-    stdout: context.stdout,
-    stderr: context.stderr,
+    stdout: quiet ? undefined : context.stdout,
+    stderr: quiet ? undefined : context.stderr,
   })
 }
