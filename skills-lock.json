@@ -2,13 +2,13 @@
   "version": 1,
   "skills": {
     "commit-and-review": {
-      "source": "aicest/skills",
+      "source": "reelout/skills",
       "sourceType": "github",
       "skillPath": "skills/commit-and-review/SKILL.md",
       "computedHash": "f90da71cdc372539bb93538e2a1d69feab0bca39f1ea41c1609ca0809623a955"
     },
     "test-naming": {
-      "source": "aicest/skills",
+      "source": "reelout/skills",
       "sourceType": "github",
       "skillPath": "skills/test-naming/SKILL.md",
       "computedHash": "bcf0e7a9176aa258661356926f0ff86e2aecc6a5dc4d12faa5fb19cf4aa23fc5"

@@ -4,7 +4,7 @@
   "description": "NPM integration for publishing packages.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aicest/reelout.git",
+    "url": "git+https://github.com/reelout/reelout.git",
     "directory": "packages/npm"
   },
   "license": "MIT",

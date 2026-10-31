@@ -4,7 +4,7 @@
   "description": "GitLab integration for automating releases.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aicest/reelout.git",
+    "url": "git+https://github.com/reelout/reelout.git",
     "directory": "packages/gitlab"
   },
   "license": "MIT",

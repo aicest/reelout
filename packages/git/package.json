@@ -4,7 +4,7 @@
   "description": "Git integration for committing version changes.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aicest/reelout.git",
+    "url": "git+https://github.com/reelout/reelout.git",
     "directory": "packages/git"
   },
   "license": "MIT",
