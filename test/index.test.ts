@@ -83,6 +83,7 @@ test('exposes the correct API contract', () => {
       "isSemVerGitTag",
       "isStableVersion",
       "isTruthyString",
+      "isVerboseOutputAllowed",
       "iterateChangelogVersions",
       "mergeConfig",
       "mergeGitHistory",

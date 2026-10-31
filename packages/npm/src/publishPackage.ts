@@ -2,7 +2,7 @@
 // Copyright (c) 2026 Fai
 
 import type { ReleaseContext, ReleasePlan } from '@reelout/core'
-import { execCommand } from '@reelout/core'
+import { execCommand, isVerboseOutputAllowed } from '@reelout/core'
 import path from 'node:path'
 import { inspectPackageManager } from './inspectPackageManager'
 import { prepareAuth } from './prepareAuth'
@@ -73,11 +73,27 @@ export async function publishPackage(
 
   if (isPnpm) commandArgs.push('--no-git-checks')
 
+  // Package manager stdout is extremely verbose. Forward it only when someone
+  // will actually keep it: an attached terminal, or a CI provider that records
+  // the job log. Anywhere else (agent sandboxes, captured pipes) the output
+  // stays in memory so `execCommand` can still report it on failure. Warnings
+  // and errors on stderr are always forwarded, they are few and load-bearing.
+  const verboseOutputAllowed = isVerboseOutputAllowed(
+    context.stdout,
+    context.env
+  )
+
+  if (!verboseOutputAllowed) {
+    context.logger.debug(
+      'Suppressing publish stdout because no terminal or CI log is attached.'
+    )
+  }
+
   await execCommand(packageManager.name, commandArgs, {
     cwd: path.resolve(context.cwd, plan.package.location),
     env: { ...context.env, ...env },
     signal: context.signal,
-    stdout: context.stdout,
+    stdout: verboseOutputAllowed ? context.stdout : undefined,
     stderr: context.stderr,
   })
 }

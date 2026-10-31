@@ -9,11 +9,15 @@ import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import { context } from '../../../test/mock/context'
 
 const execCommand = vi.hoisted(() => vi.fn())
+const outputStreams = vi.hoisted(
+  () => [] as { stdout?: unknown; stderr?: unknown }[]
+)
 const resolvePackageManager = vi.hoisted(() => vi.fn())
 const getPackageManagerVersion = vi.hoisted(() => vi.fn())
 
 vi.mock(import('@reelout/core/util/execCommand'), () => ({
   execCommand: (command, args, options) => {
+    outputStreams.push({ stdout: options?.stdout, stderr: options?.stderr })
     return execCommand(command, args, { cwd: options?.cwd, env: options?.env })
   },
 }))
@@ -39,6 +43,37 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.resetAllMocks()
+  outputStreams.length = 0
+})
+
+test('streams publish output when attached to an interactive terminal', async () => {
+  resolvePackageManager.mockResolvedValue('npm')
+  Object.assign(context.stdout, { isTTY: true })
+
+  await publishPackage(context, plan)
+
+  expect(outputStreams).toEqual([
+    { stdout: context.stdout, stderr: context.stderr },
+  ])
+})
+
+test('suppresses publish stdout but keeps stderr when no terminal is attached', async () => {
+  resolvePackageManager.mockResolvedValue('npm')
+
+  await publishPackage(context, plan)
+
+  expect(outputStreams).toEqual([{ stdout: undefined, stderr: context.stderr }])
+})
+
+test('streams publish output when no terminal is attached but CI records the log', async () => {
+  resolvePackageManager.mockResolvedValue('npm')
+  context.env = { ...context.env, CI: 'true', GITHUB_ACTIONS: 'true' }
+
+  await publishPackage(context, plan)
+
+  expect(outputStreams).toEqual([
+    { stdout: context.stdout, stderr: context.stderr },
+  ])
 })
 
 test('skips publishing when package is marked as private', async () => {
