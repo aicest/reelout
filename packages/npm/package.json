@@ -1,6 +1,6 @@
 {
   "name": "@reelout/npm",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "NPM integration for publishing packages.",
   "repository": {
     "type": "git",

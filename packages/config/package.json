@@ -1,6 +1,6 @@
 {
   "name": "@reelout/config",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Release config loading and normalization.",
   "repository": {
     "type": "git",

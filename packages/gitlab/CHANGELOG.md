@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.1](https://github.com/aicest/reelout/compare/%40reelout%2Fgitlab%400.4.0...%40reelout%2Fgitlab%400.4.1) (2026-10-31)
+
+### Features
+
+- **npm:** gate verbose publish output in quiet environments ([#2](https://github.com/aicest/reelout/issues/2)) ([123be30](https://github.com/aicest/reelout/commit/123be30bc4b6721dc525924466d8ba826f63d15c))
+
 ## 0.4.0 (2026-10-26)
 
 ### Features
