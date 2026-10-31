@@ -75,18 +75,16 @@ export async function publishPackage(
 
   // Package manager output is extremely verbose and the package managers
   // disagree on where it goes: npm writes its whole notice block to stderr
-  // while pnpm keeps everything on stdout. Both streams are therefore gated by
-  // the same predicate. Forward them only when someone will actually keep the
-  // output: an attached terminal, or a CI provider that records the job log.
-  // Anywhere else (agent sandboxes, captured pipes) `execCommand` buffers both
-  // streams and includes them in the thrown error, so a real failure is still
-  // reported with its diagnostics.
-  const verboseOutputAllowed = isVerboseOutputAllowed(
-    context.stdout,
-    context.env
-  )
+  // while pnpm keeps everything on stdout. Each stream is therefore gated on
+  // its own destination: forward it only when someone will actually keep it,
+  // meaning an attached terminal or a CI provider that records the job log.
+  // Anywhere else (agent sandboxes, captured pipes) `execCommand` buffers the
+  // output and surfaces it in the thrown error, stderr first, so a real
+  // failure is still reported with its diagnostics.
+  const forwardStdout = isVerboseOutputAllowed(context.stdout, context.env)
+  const forwardStderr = isVerboseOutputAllowed(context.stderr, context.env)
 
-  if (!verboseOutputAllowed) {
+  if (!forwardStdout || !forwardStderr) {
     context.logger.debug(
       'Suppressing publish output because no terminal or CI log is attached.'
     )
@@ -96,7 +94,7 @@ export async function publishPackage(
     cwd: path.resolve(context.cwd, plan.package.location),
     env: { ...context.env, ...env },
     signal: context.signal,
-    stdout: verboseOutputAllowed ? context.stdout : undefined,
-    stderr: verboseOutputAllowed ? context.stderr : undefined,
+    stdout: forwardStdout ? context.stdout : undefined,
+    stderr: forwardStderr ? context.stderr : undefined,
   })
 }
