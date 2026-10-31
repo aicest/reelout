@@ -73,11 +73,14 @@ export async function publishPackage(
 
   if (isPnpm) commandArgs.push('--no-git-checks')
 
-  // Package manager stdout is extremely verbose. Forward it only when someone
-  // will actually keep it: an attached terminal, or a CI provider that records
-  // the job log. Anywhere else (agent sandboxes, captured pipes) the output
-  // stays in memory so `execCommand` can still report it on failure. Warnings
-  // and errors on stderr are always forwarded, they are few and load-bearing.
+  // Package manager output is extremely verbose and the package managers
+  // disagree on where it goes: npm writes its whole notice block to stderr
+  // while pnpm keeps everything on stdout. Both streams are therefore gated by
+  // the same predicate. Forward them only when someone will actually keep the
+  // output: an attached terminal, or a CI provider that records the job log.
+  // Anywhere else (agent sandboxes, captured pipes) `execCommand` buffers both
+  // streams and includes them in the thrown error, so a real failure is still
+  // reported with its diagnostics.
   const verboseOutputAllowed = isVerboseOutputAllowed(
     context.stdout,
     context.env
@@ -85,7 +88,7 @@ export async function publishPackage(
 
   if (!verboseOutputAllowed) {
     context.logger.debug(
-      'Suppressing publish stdout because no terminal or CI log is attached.'
+      'Suppressing publish output because no terminal or CI log is attached.'
     )
   }
 
@@ -94,6 +97,6 @@ export async function publishPackage(
     env: { ...context.env, ...env },
     signal: context.signal,
     stdout: verboseOutputAllowed ? context.stdout : undefined,
-    stderr: context.stderr,
+    stderr: verboseOutputAllowed ? context.stderr : undefined,
   })
 }

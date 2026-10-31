@@ -10,7 +10,11 @@ import { context } from '../../../test/mock/context'
 
 const execCommand = vi.hoisted(() => vi.fn())
 const outputStreams = vi.hoisted(
-  () => [] as { stdout?: unknown; stderr?: unknown }[]
+  () =>
+    [] as {
+      stdout?: NodeJS.WritableStream | undefined
+      stderr?: NodeJS.WritableStream | undefined
+    }[]
 )
 const resolvePackageManager = vi.hoisted(() => vi.fn())
 const getPackageManagerVersion = vi.hoisted(() => vi.fn())
@@ -52,28 +56,37 @@ test('streams publish output when attached to an interactive terminal', async ()
 
   await publishPackage(context, plan)
 
-  expect(outputStreams).toEqual([
+  expect(outputStreams).toStrictEqual([
     { stdout: context.stdout, stderr: context.stderr },
   ])
 })
 
-test('suppresses publish stdout but keeps stderr when no terminal is attached', async () => {
+test('suppresses publish output when no terminal is attached', async () => {
   resolvePackageManager.mockResolvedValue('npm')
 
   await publishPackage(context, plan)
 
-  expect(outputStreams).toEqual([{ stdout: undefined, stderr: context.stderr }])
+  expect(outputStreams).toStrictEqual([
+    { stdout: undefined, stderr: undefined },
+  ])
 })
 
 test('streams publish output when no terminal is attached but CI records the log', async () => {
   resolvePackageManager.mockResolvedValue('npm')
-  context.env = { ...context.env, CI: 'true', GITHUB_ACTIONS: 'true' }
+  context.env = { ...context.env, CI: 'true' }
 
   await publishPackage(context, plan)
 
-  expect(outputStreams).toEqual([
+  expect(outputStreams).toStrictEqual([
     { stdout: context.stdout, stderr: context.stderr },
   ])
+})
+
+test('propagates publish failures instead of swallowing them', async () => {
+  resolvePackageManager.mockResolvedValue('npm')
+  execCommand.mockRejectedValue(new Error('publish failed'))
+
+  await expect(publishPackage(context, plan)).rejects.toThrow('publish failed')
 })
 
 test('skips publishing when package is marked as private', async () => {
